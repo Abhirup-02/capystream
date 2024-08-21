@@ -1,7 +1,8 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { db } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
     const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
@@ -10,44 +11,86 @@ export async function POST(req: NextRequest) {
         throw new Error("Add CLERK_WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local")
     }
 
-    // Get the headers
     const headerPayload = headers()
     const svix_id = headerPayload.get('svix-id')
     const svix_timestamp = headerPayload.get('svix-timestamp')
     const svix_signature = headerPayload.get('svix-signature')
 
     if (!svix_id || !svix_timestamp || !svix_signature) {
-        return new Response('Error occured -- no svix headers', {
-            status: 400,
-        })
+        return NextResponse.json(
+            { message: "Error occured -- no svix headers" },
+            { status: 400, }
+        )
     }
 
-    const payload = await req.json()
-    const body = JSON.stringify(payload)
-
+    let event: WebhookEvent
     const wh = new Webhook(WEBHOOK_SECRET)
 
-    let event: WebhookEvent
+    const payload = await req.json()
 
     try {
-        event = wh.verify(body, {
+        event = wh.verify(JSON.stringify(payload), {
             'svix-id': svix_id,
             'svix-timestamp': svix_timestamp,
             'svix-signature': svix_signature,
         }) as WebhookEvent
     } catch (err) {
         console.error('Error verifying webhook:', err)
-        return new Response('Error occured', {
-            status: 400,
-        })
+        return NextResponse.json(
+            { message: 'Error occured' },
+            { status: 400 }
+        )
     }
 
 
-    const { id } = event.data
-    const eventType = event.type
+    if (event.type === "user.created") {
+        const user = await db.user.create({
+            data: {
+                externalUserID: payload.data.id,
+                username: payload.data.username,
+                imageURL: payload.data.image_url
+            }
+        })
 
-    console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
-    console.log('Webhook body:', body)
+        console.log(`User created -> ${user}`)
 
-    return new Response('', { status: 200 })
+        return NextResponse.json(
+            { message: "User created" },
+            { status: 201 }
+        )
+    }
+
+    if (event.type === "user.updated") {
+        const user = await db.user.update({
+            where: {
+                externalUserID: payload.data.id
+            },
+            data: {
+                username: payload.data.username,
+                imageURL: payload.data.image_url
+            }
+        })
+
+        console.log(`User updated -> ${user}`)
+
+        return NextResponse.json(
+            { message: "User updated" },
+            { status: 200 }
+        )
+    }
+
+    if (event.type === "user.deleted") {
+        const user = await db.user.delete({
+            where: {
+                externalUserID: payload.data.id
+            }
+        })
+
+        console.log(`User deleted -> ${user}`)
+
+        return NextResponse.json(
+            { message: "User deleted" },
+            { status: 200 }
+        )
+    }
 }
