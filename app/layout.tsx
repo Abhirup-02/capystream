@@ -2,13 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Inter as FontSans } from "next/font/google";
 
-import { cn } from "@/lib/utils";
 import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
+import { ThemeProvider } from "@/components/theme-provider";
 
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans"
-})
 
 export const metadata: Metadata = {
   title: "CapyStream"
@@ -20,21 +17,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider appearance={{ baseTheme: dark }}>
       <html lang="en">
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
-          )}
-        >
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-          {children}
+        <body>
+          <ThemeProvider
+            attribute="class"
+            forcedTheme="dark"
+            storageKey="capystream-theme"
+          >
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
