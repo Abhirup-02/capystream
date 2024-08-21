@@ -2,6 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/store/useSidebar";
+import { useEffect } from "react";
+import { useMediaQuery } from "usehooks-ts";
 
 interface ContainerProps {
     children: React.ReactNode
@@ -9,7 +11,17 @@ interface ContainerProps {
 
 export function Container({ children }: ContainerProps) {
 
-    const { collapsed } = useSidebar((state) => state)
+    const matches = useMediaQuery("(max-width: 1024px)")
+
+    const { collapsed, onCollapse, onExpand } = useSidebar((state) => state)
+
+    useEffect(() => {
+        if (matches) {
+            onCollapse()
+        } else {
+            onExpand()
+        }
+    }, [matches, onCollapse, onExpand])
 
     return (
         <div className={cn(
