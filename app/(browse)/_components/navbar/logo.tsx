@@ -11,8 +11,8 @@ const font = Poppins({
 export function Logo() {
     return (
         <Link href='/'>
-            <div className="hidden lg:flex items-center gap-x-4 hover:opacity-75 transition">
-                <div className="bg-white rounded-full p-1">
+            <div className="flex items-center gap-x-4 hover:opacity-75 transition">
+                <div className="bg-white rounded-full p-1 mr-12 shrink-0 lg:mr-0 lg:shrink">
                     <Image
                         src='/capy.svg'
                         alt="capystream"
@@ -20,7 +20,10 @@ export function Logo() {
                         height={36}
                     />
                 </div>
-                <div className={cn(font.className)}>
+                <div className={cn(
+                    "hidden lg:block",
+                    font.className
+                )}>
                     <p className="text-lg font-semibold">Capystream</p>
                     <p className="text-xs text-muted-foreground">Let&apos;s play</p>
                 </div>
