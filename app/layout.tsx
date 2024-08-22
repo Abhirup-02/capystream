@@ -8,7 +8,7 @@ import { Toaster } from "sonner";
 
 
 export const metadata: Metadata = {
-  title: "CapyStream"
+  title: "Capystream"
 };
 
 export default function RootLayout({
