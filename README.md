@@ -1,1 +1,6 @@
-Should a Capybara ever stream?!!
+# Should a Capybara ever stream?!!
+
+Why not
+
+I will stream
+
