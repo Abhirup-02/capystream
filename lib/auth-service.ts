@@ -1,5 +1,3 @@
-"use server"
-
 import { currentUser } from "@clerk/nextjs/server";
 import { db } from "./db";
 
@@ -10,15 +8,16 @@ export async function getSelf() {
         throw new Error("Unauthorized")
     }
 
-    const user = await db.user.findUnique({
-        where: {
-            externalUserID: self.id
-        }
-    })
+    try {
+        const user = await db.user.findUnique({
+            where: {
+                externalUserID: self.id
+            }
+        })
 
-    if (!user) {
-        throw new Error("Not Found")
+        return user
     }
-
-    return user
+    catch (err) {
+        throw new Error("Error at fetching data")
+    }
 }
