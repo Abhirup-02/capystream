@@ -5,11 +5,12 @@ export async function getRecommended() {
 
     let userID
 
-    const self = await getSelf()
-    if (!self) {
-        userID = self
-    } else {
+    try {
+        const self = await getSelf()
         userID = self.id
+    }
+    catch {
+        userID = null
     }
 
     let users = []
@@ -17,9 +18,22 @@ export async function getRecommended() {
     if (userID) {
         users = await db.user.findMany({
             where: {
-                NOT: {
-                    id: userID
-                }
+                AND: [
+                    {
+                        NOT: {
+                            id: userID
+                        }
+                    },
+                    {
+                        NOT: {
+                            followedBy: {
+                                some: {
+                                    followerID: userID
+                                }
+                            }
+                        }
+                    }
+                ]
             },
             orderBy: {
                 createdAt: 'desc'

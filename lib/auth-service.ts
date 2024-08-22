@@ -8,16 +8,13 @@ export async function getSelf() {
         throw new Error("Unauthorized")
     }
 
-    try {
-        const user = await db.user.findUnique({
-            where: {
-                externalUserID: self.id
-            }
-        })
+    const user = await db.user.findUnique({
+        where: {
+            externalUserID: self.id
+        }
+    })
 
-        return user
-    }
-    catch (err) {
-        throw new Error("Error at fetching data")
-    }
+    if (!user) throw new Error("User not found")
+
+    return user
 }
