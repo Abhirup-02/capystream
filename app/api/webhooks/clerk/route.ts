@@ -48,7 +48,12 @@ export async function POST(req: NextRequest) {
             data: {
                 externalUserID: payload.data.id,
                 username: payload.data.username,
-                imageURL: payload.data.image_url
+                imageURL: payload.data.image_url,
+                stream: {
+                    create: {
+                        name: `${payload.data.username}'s stream`
+                    }
+                }
             }
         })
 
