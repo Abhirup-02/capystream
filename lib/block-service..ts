@@ -77,7 +77,7 @@ export async function blockUser(id: string) {
         }
     })
 
-    if (!existingBlock) {
+    if (existingBlock) {
         throw new Error("Already blocked")
     }
 

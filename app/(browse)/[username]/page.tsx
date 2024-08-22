@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { isFollowingUser } from "@/lib/follow-service";
 import { getUserByUsername } from "@/lib/user-service";
 import { Actions } from "./_components/actions";
+import { isBlockedUser } from "@/lib/block-service.";
 
 interface UserPageProps {
     params: {
@@ -17,6 +18,7 @@ export default async function UserPage({ params }: UserPageProps) {
         notFound()
     }
 
+    const isBlocked = await isBlockedUser(user.id)
     const isFollowing = await isFollowingUser(user.id)
 
     return (
@@ -26,6 +28,7 @@ export default async function UserPage({ params }: UserPageProps) {
             <p>{isFollowing ? 'Following' : 'Not Follwoing'}</p>
             <Actions
                 userID={user.id}
+                isBlocked={isBlocked}
                 isFollowing={isFollowing}
             />
         </div>
