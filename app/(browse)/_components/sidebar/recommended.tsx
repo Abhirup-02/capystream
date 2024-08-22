@@ -31,7 +31,6 @@ export function Recommended({ data }: RecommendedProps) {
                             key={user.id}
                             username={user.username}
                             imageURL={user.imageURL}
-                            isLive={true}
                         />
                     </div>
                 ))}
