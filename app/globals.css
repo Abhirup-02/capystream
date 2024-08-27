@@ -10,6 +10,7 @@ body,
 }
 
 .hidden-scrollbar {
+  -ms-overflow-style: none;
   scrollbar-width: none;
 }
 

@@ -53,4 +53,9 @@ export async function POST(req: NextRequest) {
             { status: 200 }
         )
     }
+
+    return NextResponse.json(
+        { message: event.event },
+        { status: 200 }
+    )
 }
