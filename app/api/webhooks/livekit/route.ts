@@ -1,19 +1,23 @@
 import { db } from "@/lib/db";
 import { WebhookReceiver } from "livekit-server-sdk";
 import { headers } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 
 const receiver = new WebhookReceiver(
     process.env.LIVEKIT_API_KEY!,
     process.env.LIVEKIT_API_SECRET!
 )
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     const body = await req.text()
     const headerPayload = headers()
     const authorization = headerPayload.get("Authorization")
 
     if (!authorization) {
-        return new Response("No authorization header", { status: 400 })
+        return NextResponse.json(
+            { message: "No authorization header" },
+            { status: 400 }
+        )
     }
 
     const event = await receiver.receive(body, authorization)
@@ -27,6 +31,11 @@ export async function POST(req: Request) {
                 isLive: true
             }
         })
+
+        return NextResponse.json(
+            { message: "Livestream started" },
+            { status: 200 }
+        )
     }
 
     if (event.event === 'ingress_ended') {
@@ -38,5 +47,10 @@ export async function POST(req: Request) {
                 isLive: false
             }
         })
+
+        return NextResponse.json(
+            { message: "Livestream ended" },
+            { status: 200 }
+        )
     }
 }

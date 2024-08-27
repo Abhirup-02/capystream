@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     if (!svix_id || !svix_timestamp || !svix_signature) {
         return NextResponse.json(
             { message: "Error occured -- no svix headers" },
-            { status: 400, }
+            { status: 400 }
         )
     }
 
