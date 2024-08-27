@@ -2,16 +2,23 @@
 
 import { getSelf } from "@/lib/auth-service"
 import { db } from "@/lib/db"
-import { type CreateIngressOptions, IngressAudioEncodingPreset, IngressClient, IngressInput, IngressVideoEncodingPreset, RoomServiceClient } from "livekit-server-sdk"
-import { TrackSource } from "livekit-server-sdk/dist/proto/livekit_models"
+import { CreateIngressOptions, IngressAudioEncodingPreset, IngressClient, IngressInput, IngressVideoEncodingPreset, RoomServiceClient, TrackSource } from "livekit-server-sdk"
 import { revalidatePath } from "next/cache"
 
-const roomService = new RoomServiceClient(process.env.LIVEKIT_API_URL!, process.env.LIVEKIT_API_KEY, process.env.LIVEKIT_API_SECRET)
+const roomService = new RoomServiceClient(
+    process.env.LIVEKIT_API_URL!,
+    process.env.LIVEKIT_API_KEY!,
+    process.env.LIVEKIT_API_SECRET!
+)
 
-const ingressClient = new IngressClient(process.env.LIVEKIT_API_URL!)
+const ingressClient = new IngressClient(
+    process.env.LIVEKIT_API_URL!,
+    process.env.LIVEKIT_API_KEY!,
+    process.env.LIVEKIT_API_SECRET!
+)
 
 
-export async function resetIngresses(hostIdentity: string) {
+async function resetIngresses(hostIdentity: string) {
     const ingresses = await ingressClient.listIngress({
         roomName: hostIdentity
     })
@@ -34,7 +41,7 @@ export async function createIngress(ingressType: IngressInput) {
 
     await resetIngresses(self.id)
 
-    const options: CreateIngressOptions = {
+    const ingressOptions: CreateIngressOptions = {
         name: self.username,
         roomName: self.id,
         participantIdentity: self.id,
@@ -42,22 +49,30 @@ export async function createIngress(ingressType: IngressInput) {
     }
 
     if (ingressType === IngressInput.WHIP_INPUT) {
-        options.bypassTranscoding = true
+        ingressOptions.enableTranscoding = true
     } else {
-        options.video = {
+        // @ts-ignore
+        ingressOptions.video = {
             source: TrackSource.CAMERA,
-            preset: IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS
+            encodingOptions: {
+                value: IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS,
+                case: "preset"
+            }
         }
-        options.audio = {
+        // @ts-ignore
+        ingressOptions.audio = {
             source: TrackSource.MICROPHONE,
-            preset: IngressAudioEncodingPreset.OPUS_STEREO_96KBPS
+            encodingOptions: {
+                value: IngressAudioEncodingPreset.OPUS_STEREO_96KBPS,
+                case: "preset"
+            }
         }
     }
 
-    const ingress = await ingressClient.createIngress(ingressType, options)
+    const ingress = await ingressClient.createIngress(ingressType, ingressOptions)
 
     if (!ingress || !ingress.url || !ingress.streamKey) {
-        throw new Error("Failed tpo create ingress")
+        throw new Error("Failed to create ingress")
     }
 
     await db.stream.update({
