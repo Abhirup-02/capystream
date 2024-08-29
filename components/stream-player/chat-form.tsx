@@ -43,9 +43,9 @@ export function ChatForm({ value, onChange, onSubmit, isHidden, isFollowersOnly,
     if (isHidden) return null
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col items-center gap-y-4">
+        <form onSubmit={handleSubmit} className="flex flex-col items-center gap-y-4 p-3">
             <div className="w-full">
-                <ChatInfo isDelayed={isDelayed} isFollowersOnly={isDisabled} />
+                <ChatInfo isDelayed={isDelayed} isFollowersOnly={isFollowersOnly} />
                 <Input
                     onChange={(e) => onChange(e.target.value)}
                     value={value}
@@ -57,8 +57,8 @@ export function ChatForm({ value, onChange, onSubmit, isHidden, isFollowersOnly,
                     )}
                 />
             </div>
-            <div>
-                <Button type="submit" variant="primary" size="sm" disabled={isDisabled} className="ml-auto">
+            <div className="ml-auto">
+                <Button type="submit" variant="primary" size="sm" disabled={isDisabled}>
                     Chat
                 </Button>
             </div>
