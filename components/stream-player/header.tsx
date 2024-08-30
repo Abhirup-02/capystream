@@ -70,7 +70,7 @@ export function Header({ hostName, hostIdentity, viewerIdentity, imageURL, isFol
 
 export function HeaderSkeleton() {
     return (
-        <div className="flex flex-col lg:flex-rpw gap-y-4 lg:gap-y-0 items-start justify-between px-4">
+        <div className="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 items-start justify-between px-4">
             <div className="flex items-center gap-x-2 mb-2">
                 <UserAvatarSkeleton size="lg" />
                 <div className="space-y-2">
