@@ -40,7 +40,7 @@ export function InfoModal({ initialname, initialThumbnail }: InfoModalProps) {
         e.preventDefault()
 
         startTransition(() => {
-            updateStream({ name: name })
+            updateStream({ name: name.trim() })
                 .then(() => {
                     toast.success('Stream updated')
                     closeRef.current?.click()
