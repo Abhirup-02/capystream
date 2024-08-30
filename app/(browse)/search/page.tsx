@@ -1,21 +1,24 @@
 import { redirect } from "next/navigation";
-import { Results } from "./_components/results";
+import { Results, ResultsSkeleton } from "./_components/results";
+import { Suspense } from "react";
 
 interface SearchPageProps {
-    searchParamas: {
+    searchParams: {
         term?: string;
     }
 }
 
-export default function SearchPage({ searchParamas }: SearchPageProps) {
+export default function SearchPage({ searchParams }: SearchPageProps) {
 
-    if (!searchParamas.term) {
+    if (!searchParams.term) {
         redirect('/')
     }
 
     return (
         <div className="h-full p-8 max-w-screen-2xl mx-auto">
-            <Results term={searchParamas.term} />
+            <Suspense fallback={<ResultsSkeleton />}>
+                <Results term={searchParams.term} />
+            </Suspense>
         </div>
     )
 }

@@ -7,7 +7,7 @@ export async function Results() {
     const data = await getStreams()
 
     return (
-        <div>
+        <>
             <h2 className="text-lg font-semibold mb-4">
                 Streams you might like
             </h2>
@@ -24,7 +24,7 @@ export async function Results() {
                     />
                 ))}
             </div>
-        </div>
+        </>
     )
 }
 

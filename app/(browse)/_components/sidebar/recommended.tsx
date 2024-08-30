@@ -17,7 +17,7 @@ export function Recommended({ data }: RecommendedProps) {
     const showLabel = !collapsed && data.length > 0
 
     return (
-        <div>
+        <>
             {showLabel && (
                 <div className="pl-6 mb-4">
                     <p className="text-sm text-muted-foreground">
@@ -38,7 +38,7 @@ export function Recommended({ data }: RecommendedProps) {
                     </div>
                 ))}
             </ul>
-        </div>
+        </>
     )
 }
 

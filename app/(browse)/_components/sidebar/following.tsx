@@ -21,7 +21,7 @@ export function Following({ data }: FollowingProps) {
     }
 
     return (
-        <div>
+        <>
             {!collapsed && (
                 <div className="pl-6 mb-4">
                     <p className="text-sm text-muted-foreground">
@@ -39,7 +39,7 @@ export function Following({ data }: FollowingProps) {
                     />
                 ))}
             </ul>
-        </div>
+        </>
     )
 }
 
