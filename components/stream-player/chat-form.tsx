@@ -53,7 +53,7 @@ export function ChatForm({ value, onChange, onSubmit, isHidden, isFollowersOnly,
                     placeholder="Send a message"
                     className={cn(
                         "border-white/10",
-                        isFollowersOnly && "rounded-t-none border-b-0"
+                        (isFollowersOnly || isDelayed) && "rounded-t-none border-b-0"
                     )}
                 />
             </div>

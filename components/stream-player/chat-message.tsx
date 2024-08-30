@@ -1,5 +1,3 @@
-'use client'
-
 import { stringToColor } from "@/lib/utils";
 import { ReceivedChatMessage } from "@livekit/components-react"
 import { format } from "date-fns"
