@@ -1,4 +1,5 @@
 import { StreamPlayer } from "@/components/stream-player";
+import { isFollowingUser } from "@/lib/follow-service";
 import { getUserByUsername } from "@/lib/user-service";
 import { currentUser } from "@clerk/nextjs/server";
 
@@ -17,12 +18,14 @@ export default async function CreatorPage({ params }: CreatorPageProps) {
         throw new Error("Unauthorized")
     }
 
+    const isFollowing = await isFollowingUser(user.id)
+
     return (
         <div className="h-full">
             <StreamPlayer
                 user={user}
                 stream={user.stream}
-                isFollowing
+                isFollowing={isFollowing}
             />
         </div>
     )
