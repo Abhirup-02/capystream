@@ -1,6 +1,5 @@
 import { getStreams } from "@/lib/feed-service"
-import { Result } from "postcss"
-import { ResultCard } from "./result-card"
+import { ResultCard, ResultCardSkeleton } from "./result-card"
 import { Skeleton } from "@/components/ui/skeleton"
 
 export async function Results() {
@@ -9,7 +8,7 @@ export async function Results() {
 
     return (
         <div>
-            <h2 className="teet-lg font-semibold mb-4">
+            <h2 className="text-lg font-semibold mb-4">
                 Streams you might like
             </h2>
             {data.length === 0 && (
@@ -35,7 +34,7 @@ export function ResultsSkeleton() {
             <Skeleton className="h-8 w-[290px] mb-4" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
                 {[...Array(4)].map((_, i) => (
-                    <ResultsSkeleton key={i} />
+                    <ResultCardSkeleton key={i} />
                 ))}
             </div>
         </div>
