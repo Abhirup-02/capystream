@@ -41,8 +41,13 @@ export async function getSearch(term?: string) {
                     }
                 ]
             },
-            include: {
-                user: true
+            select: {
+                user: true,
+                id: true,
+                name: true,
+                isLive: true,
+                thumbnailURL: true,
+                updatedAt: true
             },
             orderBy: [
                 {
@@ -72,8 +77,13 @@ export async function getSearch(term?: string) {
                     }
                 ]
             },
-            include: {
-                user: true
+            select: {
+                user: true,
+                id: true,
+                name: true,
+                isLive: true,
+                thumbnailURL: true,
+                updatedAt: true
             },
             orderBy: [
                 {
