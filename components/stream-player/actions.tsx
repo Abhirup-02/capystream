@@ -69,6 +69,6 @@ export function Actions({ isFollowing, hostIdentity, isHost }: ActionsProps) {
 
 export function ActionsSkeleton() {
     return (
-        <Skeleton className="h-10 w-full lg:w-24" />
+        <Skeleton className="h-8 w-full lg:w-24" />
     )
 }

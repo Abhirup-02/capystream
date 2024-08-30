@@ -54,17 +54,18 @@ export function ChatCommunity({ viewerName, hostName, isHidden }: ChatCommunityP
                 className="border-white/10"
             />
             <ScrollArea className="gap-y-2 mt-4">
-                <div className="text-center text-sm text-muted-foreground hidden last:block p-2">
-                    {filteredParticipants.map((participant) => (
-                        <CommunityItem
-                            key={participant.identity}
-                            hostName={hostName}
-                            viewerName={viewerName}
-                            participantIdentity={participant.identity}
-                            participantName={participant.name}
-                        />
-                    ))}
-                </div>
+                <p className="text-center text-sm text-muted-foreground hidden last:block p-2">
+                    No results
+                </p>
+                {filteredParticipants.map((participant) => (
+                    <CommunityItem
+                        key={participant.identity}
+                        hostName={hostName}
+                        viewerName={viewerName}
+                        participantIdentity={participant.identity}
+                        participantName={participant.name}
+                    />
+                ))}
             </ScrollArea>
         </div>
     )
