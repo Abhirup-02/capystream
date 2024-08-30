@@ -26,7 +26,7 @@ export function Header({ hostName, hostIdentity, viewerIdentity, imageURL, isFol
     const isHost = viewerIdentity === hostAsViewer
 
     return (
-        <div className="flex flex-col lg:flex-rpw gap-y-4 lg:gap-y-0 items-start justify-between px-4">
+        <div className="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 items-start justify-between px-4">
             <div className="flex items-center gap-x-3">
                 <UserAvatar
                     imageURL={imageURL}

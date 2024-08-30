@@ -54,7 +54,7 @@ export function ChatCommunity({ viewerName, hostName, isHidden }: ChatCommunityP
                 className="border-white/10"
             />
             <ScrollArea className="gap-y-2 mt-4">
-                <p className="text-center text-sm text-muted-foreground hidden last:block p-2">
+                <div className="text-center text-sm text-muted-foreground hidden last:block p-2">
                     {filteredParticipants.map((participant) => (
                         <CommunityItem
                             key={participant.identity}
@@ -64,7 +64,7 @@ export function ChatCommunity({ viewerName, hostName, isHidden }: ChatCommunityP
                             participantName={participant.name}
                         />
                     ))}
-                </p>
+                </div>
             </ScrollArea>
         </div>
     )
