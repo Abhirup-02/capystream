@@ -34,7 +34,7 @@ export function AboutCard({ hostName, hostIdentity, viewerIdentity, bio, followe
                     </span>
                     {' '}{followedByLabel}
                 </div>
-                {bio || 'This user prefers to keep an air of mystry about them.'}
+                {bio || 'This user prefers to keep an air of mystery about them.'}
             </div>
         </div>
     )
