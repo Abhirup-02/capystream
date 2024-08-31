@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
             }
         })
 
-        console.log(`User created -> ${user}`)
+        console.log('User created -> ', user.toString())
 
         return NextResponse.json(
             { message: "User created" },
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
             }
         })
 
-        console.log(`User updated -> ${user}`)
+        console.log('User updated -> ', user.toString())
 
         return NextResponse.json(
             { message: "User updated" },
@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
             }
         })
 
-        console.log(`User deleted -> ${user}`)
+        console.log('User deleted -> ', user.toString())
 
         return NextResponse.json(
             { message: "User deleted" },
