@@ -88,5 +88,5 @@ export async function createIngress(ingressType: IngressInput) {
 
     revalidatePath(`/u/${self.username}/keys`)
 
-    return ingress
+    return
 }
