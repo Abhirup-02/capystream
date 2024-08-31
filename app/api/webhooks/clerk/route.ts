@@ -72,7 +72,12 @@ export async function POST(req: NextRequest) {
             },
             data: {
                 username: payload.data.username,
-                imageURL: payload.data.image_url
+                imageURL: payload.data.image_url,
+                stream: {
+                    update: {
+                        name: `${payload.data.username}'s stream`
+                    }
+                }
             }
         })
 
