@@ -1,10 +1,12 @@
 import { getStreams } from "@/lib/feed-service"
 import { ResultCard, ResultCardSkeleton } from "./result-card"
 import { Skeleton } from "@/components/ui/skeleton"
+import { db } from "@/lib/db"
 
 export async function Results() {
 
     const data = await getStreams()
+    await db.$disconnect()
 
     return (
         <>

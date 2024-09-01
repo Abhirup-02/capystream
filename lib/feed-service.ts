@@ -43,7 +43,6 @@ export async function getStreams() {
                 }
             ]
         })
-        await db.$disconnect()
     }
     else {
         streams = await db.stream.findMany({
@@ -63,7 +62,6 @@ export async function getStreams() {
                 }
             ]
         })
-        await db.$disconnect()
     }
 
     return streams

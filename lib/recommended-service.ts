@@ -55,7 +55,6 @@ export async function getRecommended() {
                 createdAt: 'desc'
             }
         })
-        await db.$disconnect()
     }
     else {
         users = await db.user.findMany({
@@ -70,7 +69,6 @@ export async function getRecommended() {
                 createdAt: 'desc'
             }
         })
-        await db.$disconnect()
     }
 
     return users

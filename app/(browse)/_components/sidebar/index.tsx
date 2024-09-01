@@ -4,10 +4,13 @@ import { Following, FollowingSkeleton } from "./following";
 import { Recommended, RecommendedSkeleton } from "./recommended";
 import { Toggle } from "./toggle";
 import { Wrapper } from "./wrapper";
+import { db } from "@/lib/db";
 
 export async function Sidebar() {
 
     const [recommended, following] = await Promise.all([getRecommended(), getFollowedUsers()])
+    await db.$disconnect()
+
 
     return (
         <Wrapper>
