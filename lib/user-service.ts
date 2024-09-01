@@ -28,6 +28,7 @@ export async function getUserByUsername(username: string) {
                 }
             }
         })
+        await db.$disconnect()
 
         return user
     }
@@ -44,6 +45,7 @@ export async function getUserById(id: string) {
                 stream: true
             }
         })
+        await db.$disconnect()
 
         return user
     }

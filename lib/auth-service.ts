@@ -13,6 +13,7 @@ export async function getSelf() {
             externalUserID: self.id
         }
     })
+    await db.$disconnect()
 
     if (!user) throw new Error("User not found")
 
@@ -29,6 +30,7 @@ export async function getSelfByUsername(username: string) {
     const user = await db.user.findUnique({
         where: { username }
     })
+    await db.$disconnect()
 
     if (!user) throw new Error("User not found")
 

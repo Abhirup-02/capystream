@@ -85,6 +85,7 @@ export async function createIngress(ingressType: IngressInput) {
             streamKey: ingress.streamKey
         }
     })
+    await db.$disconnect()
 
     revalidatePath(`/u/${self.username}/keys`)
 

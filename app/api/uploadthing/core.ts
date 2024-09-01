@@ -25,6 +25,7 @@ export const ourFileRouter = {
                     thumbnailURL: file.url
                 }
             })
+            await db.$disconnect()
 
             return { fileURL: file.url }
         })

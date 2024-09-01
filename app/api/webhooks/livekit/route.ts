@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
                 isLive: true
             }
         })
+        await db.$disconnect()
 
         return NextResponse.json(
             { message: "Livestream started" },
@@ -47,6 +48,7 @@ export async function POST(req: NextRequest) {
                 isLive: false
             }
         })
+        await db.$disconnect()
 
         return NextResponse.json(
             { message: "Livestream ended" },

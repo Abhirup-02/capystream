@@ -28,6 +28,7 @@ export async function getFollowedUsers() {
                 }
             }
         })
+        await db.$disconnect()
 
         return followedUsers
     }
@@ -45,10 +46,12 @@ export async function isFollowingUser(id: string) {
         })
 
         if (!otherUser) {
+            await db.$disconnect()
             throw new Error("User not found")
         }
 
         if (otherUser.id === self.id) {
+            await db.$disconnect()
             return true
         }
 
@@ -60,6 +63,7 @@ export async function isFollowingUser(id: string) {
                 }
             }
         })
+        await db.$disconnect()
 
         return !!existingFollow
     }
@@ -76,10 +80,12 @@ export async function followUser(id: string) {
     })
 
     if (!otherUser) {
+        await db.$disconnect()
         throw new Error("User not found")
     }
 
     if (otherUser.id === self.id) {
+        await db.$disconnect()
         throw new Error("Cannot follow yourself")
     }
 
@@ -92,6 +98,7 @@ export async function followUser(id: string) {
 
 
     if (existingFollow) {
+        await db.$disconnect()
         throw new Error("Already following")
     }
 
@@ -106,6 +113,7 @@ export async function followUser(id: string) {
                 follower: true
             }
         })
+        await db.$disconnect()
 
         return follow
     }
@@ -119,10 +127,12 @@ export async function unfollowUser(id: string) {
     })
 
     if (!otherUser) {
+        await db.$disconnect()
         throw new Error("User not found")
     }
 
     if (otherUser.id === self.id) {
+        await db.$disconnect()
         throw new Error("Cannot unfollow yourself")
     }
 
@@ -135,6 +145,7 @@ export async function unfollowUser(id: string) {
 
 
     if (!existingFollow) {
+        await db.$disconnect()
         throw new Error("Not following")
     }
 
@@ -146,6 +157,7 @@ export async function unfollowUser(id: string) {
             following: true
         }
     })
+    await db.$disconnect()
 
     return unfollow
 }
