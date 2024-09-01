@@ -9,7 +9,6 @@ import { db } from "@/lib/db";
 export async function Sidebar() {
 
     const [recommended, following] = await Promise.all([getRecommended(), getFollowedUsers()])
-    await db.$disconnect()
 
 
     return (
