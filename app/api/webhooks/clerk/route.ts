@@ -44,17 +44,24 @@ export async function POST(req: NextRequest) {
 
 
     if (event.type === "user.created") {
-        const user = await db.user.create({
-            data: {
-                externalUserID: payload.data.id,
-                username: payload.data.username,
-                imageURL: payload.data.image_url,
-                stream: {
-                    create: {
-                        name: `${payload.data.username}'s stream`
-                    }
+        const user = await db.$transaction(async (tx) => {
+
+            const user = await tx.user.create({
+                data: {
+                    externalUserID: payload.data.id,
+                    username: payload.data.username,
+                    imageURL: payload.data.image_url
                 }
-            }
+            })
+
+            await tx.stream.create({
+                data: {
+                    userID: user.id,
+                    name: `${payload.data.username}'s stream`
+                }
+            })
+
+            return user
         })
 
         console.log(`User created -> ${user.username}`)
@@ -66,19 +73,28 @@ export async function POST(req: NextRequest) {
     }
 
     if (event.type === "user.updated") {
-        const user = await db.user.update({
-            where: {
-                externalUserID: payload.data.id
-            },
-            data: {
-                username: payload.data.username,
-                imageURL: payload.data.image_url,
-                stream: {
-                    update: {
-                        name: `${payload.data.username}'s stream`
-                    }
+        const user = await db.$transaction(async (tx) => {
+
+            const user = await tx.user.update({
+                where: {
+                    externalUserID: payload.data.id
+                },
+                data: {
+                    username: payload.data.username,
+                    imageURL: payload.data.image_url
                 }
-            }
+            })
+
+            await tx.stream.update({
+                where: {
+                    userID: user.id
+                },
+                data: {
+                    name: `${payload.data.username}'s stream`
+                }
+            })
+
+            return user
         })
 
         console.log(`User updated -> ${user.username}`)
@@ -103,4 +119,9 @@ export async function POST(req: NextRequest) {
             { status: 200 }
         )
     }
+
+    return NextResponse.json(
+        { message: "Event out of subscribed context" },
+        { status: 404 }
+    )
 }
