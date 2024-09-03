@@ -16,7 +16,6 @@ export async function updateStream(values: Partial<Stream>) {
         })
 
         if (!selfStream) {
-            await db.$disconnect()
             throw new Error("Stream not found")
         }
 
@@ -36,7 +35,6 @@ export async function updateStream(values: Partial<Stream>) {
                 ...validData
             }
         })
-        await db.$disconnect()
 
         revalidatePath(`/u/${self.username}/chat`)
         revalidatePath(`/u/${self.username}`)

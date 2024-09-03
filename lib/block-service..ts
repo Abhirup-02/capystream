@@ -13,7 +13,6 @@ export async function getBlockedUsers() {
                 blocked: true
             }
         })
-        await db.$disconnect()
 
         return blockedUsers
     }
@@ -31,12 +30,10 @@ export async function isBlockedUser(id: string) {
         })
 
         if (!otherUser) {
-            await db.$disconnect()
             throw new Error("User not found")
         }
 
         if (otherUser.id === self.id) {
-            await db.$disconnect()
             return false
         }
 
@@ -48,7 +45,6 @@ export async function isBlockedUser(id: string) {
                 }
             }
         })
-        await db.$disconnect()
 
         return !!existingBlock
     }
@@ -69,7 +65,6 @@ export async function blockUser(id: string) {
     })
 
     if (!otherUser) {
-        await db.$disconnect()
         throw new Error("User not found")
     }
 
@@ -83,7 +78,6 @@ export async function blockUser(id: string) {
     })
 
     if (existingBlock) {
-        await db.$disconnect()
         throw new Error("Already blocked")
     }
 
@@ -96,7 +90,6 @@ export async function blockUser(id: string) {
             blocked: true
         }
     })
-    await db.$disconnect()
 
     return block
 }
@@ -113,7 +106,6 @@ export async function unblockUser(id: string) {
     })
 
     if (!otherUser) {
-        await db.$disconnect()
         throw new Error("User not found")
     }
 
@@ -127,7 +119,6 @@ export async function unblockUser(id: string) {
     })
 
     if (!existingBlock) {
-        await db.$disconnect()
         throw new Error("Not blocked")
     }
 
@@ -139,7 +130,6 @@ export async function unblockUser(id: string) {
             blocked: true
         }
     })
-    await db.$disconnect()
 
     return unblock
 }

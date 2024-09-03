@@ -56,7 +56,6 @@ export async function POST(req: NextRequest) {
                 }
             }
         })
-        await db.$disconnect()
 
         console.log(`User created -> ${user.username}`)
 
@@ -81,7 +80,6 @@ export async function POST(req: NextRequest) {
                 }
             }
         })
-        await db.$disconnect()
 
         console.log(`User updated -> ${user.username}`)
 
@@ -97,7 +95,6 @@ export async function POST(req: NextRequest) {
                 externalUserID: payload.data.id
             }
         })
-        await db.$disconnect()
 
         console.log(`User deleted -> ${user.username}`)
 

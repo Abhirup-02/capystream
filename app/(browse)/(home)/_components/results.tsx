@@ -6,7 +6,6 @@ import { db } from "@/lib/db"
 export async function Results() {
 
     const data = await getStreams()
-    await db.$disconnect()
 
     return (
         <>

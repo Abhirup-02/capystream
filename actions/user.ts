@@ -18,7 +18,6 @@ export async function updateUser(values: Partial<User>) {
         },
         data: { ...validData }
     })
-    await db.$disconnect()
 
     revalidatePath(`/${self.username}`)
     revalidatePath(`/u/${self.username}`)
