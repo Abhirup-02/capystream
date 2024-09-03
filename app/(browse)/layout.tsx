@@ -6,7 +6,7 @@ import { Sidebar, SidebarSkeleton } from "./_components/sidebar";
 import { Container } from "./_components/container";
 
 export const metadata: Metadata = {
-    title: "Browse"
+    title: "Capystream"
 };
 
 export default function BrowseLayout({
